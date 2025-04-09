@@ -1,12 +1,36 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Auth/Login";
+import SignUp from "./pages/Auth/SignUp";
+import PrivateRoutes from "./routes/PrivateRoutes";
+import Dashboard from "./pages/Admin/Dashboard";
+import ManageTasks from "./pages/Admin/ManageTasks";
+import CreateTasks from "./pages/Admin/CreateTasks";
+import ManageUsers from "./pages/Admin/ManageUsers";
+import UserDashboard from "./pages/User/UserDashboard";
 function App() {
   return (
-    <div className="w-25">
-      <h1
-        type="button"
-        className="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 cursor-pointer"
-      >
-        app
-      </h1>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signUp" element={<SignUp />} />
+
+          {/* admin Routes */}
+
+          <Route element={<PrivateRoutes allowedRoles={["admin"]} />}>
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/tasks" element={<ManageTasks />} />
+            <Route path="/admin/users" element={<ManageUsers />} />
+            <Route path="/admin/create-task" element={<CreateTasks />} />
+          </Route>
+          
+          {/* admin Routes */}
+
+          <Route element={<PrivateRoutes allowedRoles={["admin"]} />}>
+            <Route path="/users/dashboard" element={<UserDashboard />} />
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 }
